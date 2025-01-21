@@ -74,7 +74,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      let player = videojs('my-video', {
+      let videoJsPlayer = videojs('my-video', {
         playbackRates: [0.5, 1, 1.5, 2],
         enableSourceset: false,
         controlBar: {
@@ -89,7 +89,7 @@
         }
       });
 
-      player.markers({
+      videoJsPlayer.markers({
         markers: [
           { time: 9.5, text: "this" },
           { time: 16, text: "is" },
@@ -147,7 +147,7 @@
       }
     }
 
-    const player = new Plyr('#plym-player', {
+    const plyrPlayer = new Plyr('#plym-player', {
       markers: {
         enabled: true,
         points: [
@@ -167,7 +167,7 @@
       },
     });
 
-    player.source = sources.video;
+    plyrPlayer.source = sources.video;
   </script>
   <hr />
   <!-- Clappr -->
