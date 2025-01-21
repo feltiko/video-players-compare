@@ -2,8 +2,17 @@
 <html lang="en">
 
 <head>
+  <!-- PlayerJS -->
+  <script src="./playerjs.js" type="text/javascript"></script>
+
   <!-- VideoJS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/video.js@8.21.0/dist/video.min.js"></script>
+  <script
+    src="https://unpkg.com/@silvermine/videojs-quality-selector/dist/js/silvermine-videojs-quality-selector.min.js"></script>
+  <script src="./videojs/videojs-markers.min.js"></script>
   <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+  <link href="./videojs//videojs.markers.min.css" rel="stylesheet" />
   <link href="https://unpkg.com/@silvermine/videojs-quality-selector/dist/css/quality-selector.css" rel="stylesheet">
 
   <!-- Plyr player -->
@@ -35,6 +44,21 @@
 </head>
 
 <body style="padding: 16px;">
+  <!-- Player JS -->
+  <h1>PlayerJS</h1>
+  <div style="width: 640px;">
+    <div id="playerjs-player-demo"></div>
+  </div>
+
+  <script>
+    var player = new Playerjs({
+      id: "playerjs-player-demo",
+      file: [{ "title": "Видое птицах", "file": "[480p]./oceans.mp4,[720p]./oceans.mp4,[1080p]./oceans.mp4" }, { "title": "Первое событие", "file": "seek:5" }, { "title": "Второе событие", "file": "seek:25" }, { "title": "Третье событие", "file": "seek:31" }], poster: './video.png'
+    });
+  </script>
+  <hr />
+
+  <!-- VideoJS -->
   <h1>VideoJS</h1>
   <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" poster="./video.png">
     <source src="./oceans.mp4" type="video/mp4" label="1080P" />
@@ -47,9 +71,6 @@
     </p>
   </video>
 
-  <script src="https://cdn.jsdelivr.net/npm/video.js@8.21.0/dist/video.min.js"></script>
-  <script
-    src="https://unpkg.com/@silvermine/videojs-quality-selector/dist/js/silvermine-videojs-quality-selector.min.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -66,6 +87,15 @@
             'fullscreenToggle',
           ]
         }
+      });
+
+      player.markers({
+        markers: [
+          { time: 9.5, text: "this" },
+          { time: 16, text: "is" },
+          { time: 23.6, text: "marker" },
+          { time: 28, text: "and  second marker ogo blin" }
+        ]
       });
 
     });
@@ -197,6 +227,7 @@
 
     });
   </script>
+  <hr />
 </body>
 
 </html>
