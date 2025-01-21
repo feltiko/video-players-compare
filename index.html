@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- VideoJS -->
+  <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+  <link href="https://unpkg.com/@silvermine/videojs-quality-selector/dist/css/quality-selector.css" rel="stylesheet">
+
+  <!-- Plyr player -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
+  <!-- Clappr -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.plainhtml5.min.js">
+  </script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/clappr-markers-plugin@latest/dist/clappr-markers-plugin.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/clappr-playback-rate-plugin@latest/lib/clappr-playback-rate-plugin.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/gh/clappr/clappr-level-selector-plugin@latest/dist/level-selector.min.js"></script>
+  <script src="https://blog.infireal.com/files/ffmpeg-dash-trailer/dist/dash-shaka-playback.js"></script>
+
+  <!-- MediaElements.Js -->
+  <!-- Import Mediaelement CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/mediaelement@latest/build/mediaelementplayer.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement-plugins@latest/dist/quality/quality.min.css">
+
+  <!-- Import Mediaelement JS -->
+  <script src="https://cdn.jsdelivr.net/npm/mediaelement@latest/build/mediaelement-and-player.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mediaelement-plugins@latest/dist/quality/quality.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mediaelement-plugins@latest/dist/markers/markers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mediaelement-plugins@latest/dist/speed/speed.min.js"></script>
+
+
+</head>
+
+<body style="padding: 16px;">
+  <h1>VideoJS</h1>
+  <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" poster="./video.png">
+    <source src="./oceans.mp4" type="video/mp4" label="1080P" />
+    <source src="./oceans.mp4" type="video/mp4" label="480P" selected="true" />
+    <source src="./oceans.mp4" type="video/mp4" label="720P" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+  </video>
+
+  <script src="https://cdn.jsdelivr.net/npm/video.js@8.21.0/dist/video.min.js"></script>
+  <script
+    src="https://unpkg.com/@silvermine/videojs-quality-selector/dist/js/silvermine-videojs-quality-selector.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let player = videojs('my-video', {
+        playbackRates: [0.5, 1, 1.5, 2],
+        enableSourceset: false,
+        controlBar: {
+          children: [
+            'playToggle',
+            'progressControl',
+            'volumePanel',
+            'qualitySelector',
+            'playbackRateMenuButton',
+            'fullscreenToggle',
+          ]
+        }
+      });
+
+    });
+  </script>
+
+  <hr />
+
+  <!-- PLYR -->
+  <h1>Plyr</h1>
+  <div style="width: 640px;">
+    <video id="plym-player" playsinline controls data-poster="./video.png">
+      <source src="/oceans.mp4" type="video/mp4" />
+      <source src="./oceans.mp4" type="video/mp4" size="576" />
+      <source src="./oceans.mp4" type="video/mp4" label="720" />
+      <source src="./oceans.mp4" type="video/mp4" label="1080" />
+    </video>
+  </div>
+
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script>
+    const sources = {
+      video: {
+        type: 'video',
+        title: 'View From A Blue Moon',
+        width: 640,
+        sources: [
+          {
+            src: './oceans.mp4',
+            type: 'video/mp4',
+            size: 576,
+          },
+          {
+            src: './oceans.mp4',
+            type: 'video/mp4',
+            size: 720,
+          },
+          {
+            src: './oceans.mp4',
+            type: 'video/mp4',
+            size: 1080,
+          },
+          {
+            src: './oceans.mp4',
+            type: 'video/mp4',
+            size: 1440,
+          },
+        ],
+        poster: './video.png',
+      }
+    }
+
+    const player = new Plyr('#plym-player', {
+      markers: {
+        enabled: true,
+        points: [
+          {
+            time: 3,
+            label: 'first marker',
+          },
+          {
+            time: 4,
+            label: 'second marker',
+          },
+          {
+            time: 10,
+            label: '<strong>third</strong> marker',
+          },
+        ],
+      },
+    });
+
+    player.source = sources.video;
+  </script>
+  <hr />
+  <!-- Clappr -->
+  <h1>Clappr</h1>
+  <div id="clappr-player"></div>
+  <script>
+    // Initialize the Clappr player with the required plugins
+    var clapprPlayer = new Clappr.Player({
+      source: "./oceans.mp4",
+      poster: "./video.png",
+      parentId: "#clappr-player",
+      plugins: [
+        PlaybackRatePlugin,
+        DashShakaPlayback,
+        LevelSelector,
+        // ClapprMarkersPlugin
+      ],
+
+      playbackRateConfig: {
+        defaultValue: 1,
+        options: [
+          { value: 0.5, label: '0.5x' },
+          { value: 1, label: '1x' },
+          { value: 2, label: '2x' },
+        ],
+      },
+    });
+
+    console.log(clapprPlayer);
+  </script>
+
+  <hr />
+  <h1>MediaElements.js</h1>
+  <div class="player" style="width: 640px">
+    <video id="player-mediaelements" width="640" height="360" preload="none" style="max-width: 100%" controls=""
+      poster="./video.png">
+      <source type="video/mp4" src="./oceans.mp4" data-quality="720">
+      <source type="video/mp4" src="./oceans.mp4" data-quality="1080">
+      <source type="video/mp4" src="./oceans.mp4" data-quality="480">
+
+    </video>
+  </div>
+
+  <script>
+    // You can use either a string for the player ID (i.e., `player`), 
+    // or `document.querySelector()` for any selector
+    const playerCaptions = new MediaElementPlayer('player-mediaelements', {
+      iconSprite: './mejs-controls.svg', // path to svg-spritemap for all icons
+      features: ['playpause', 'current', 'progress', 'duration', 'volume', 'tracks', 'speed', 'quality', 'fullscreen', 'markers'],
+      markers: [3, 10, 40],
+      markerColor: '#00FF00',
+      markerWidth: 3,
+      markerCallback: function (media, time) {
+        alert('You reached ' + Math.round(time) + ' seconds');
+      },
+
+
+    });
+  </script>
+</body>
+
+</html>
